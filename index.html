@@ -1239,6 +1239,13 @@ function adminDrawerPanel(){
 }
 window.__adminPage=adminPage;window.__adminPageReady=true;
 window.adminLogin=async function(e){e.preventDefault();const msg=document.getElementById("adminLoginMessage");msg.innerHTML="";const email=document.getElementById("adminEmail").value.trim();const password=document.getElementById("adminPassword").value;try{adminBusy=true;await signInAdmin(email,password);msg.innerHTML='<div class="admin-success">Signed in. Loading live Firebase data…</div>';setTimeout(()=>{window.route();requestAnimationFrame(()=>document.querySelector('.admin-shell')?.scrollIntoView({behavior:'smooth',block:'start'}))},0)}catch(err){console.error(err);msg.innerHTML=`<div class="admin-error">${window.esc(err?.message||"Unable to sign in.")}</div>`}finally{adminBusy=false}};
+/* Expose AI tool admin actions because the admin UI is rendered with inline handlers. */
+window.adminSaveTool=adminSaveTool;
+window.resetToolAdminForm=resetToolAdminForm;
+window.openToolAdminEdit=openToolAdminEdit;
+window.adminDeleteTool=adminDeleteTool;
+window.adminToggleToolVisible=adminToggleToolVisible;
+window.adminSaveToolDrawer=adminSaveToolDrawer;
 window.adminSignOut=async function(){await signOut(auth);currentUser=null;window.__firebaseHasTemplates=false;window.route()};
 window.adminResetForm=function(){adminEditingId=null;window.route()};
 window.adminEditTemplate=function(id){
